@@ -49,5 +49,6 @@ $ docker-compose run --rm elixir
 #### Next Steps
 
 - Add tests for `merge/2`
+- Documentation
 - Load configuration from environment variables
 - Auto-wiring so a handler isn't needed. Contents of file would be `{:app, :key, :value}`
