@@ -1,5 +1,7 @@
 # Weave
 
+[![Build Status](https://travis-ci.org/GT8Online/weave.svg?branch=master)](https://travis-ci.org/GT8Online/weave)
+
 ## A JIT configuration loader for Elixir
 
 ### About
