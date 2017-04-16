@@ -40,6 +40,18 @@ defmodule Your.Handler do
 end
 ```
 
+### Loading Configuration
+
+You'll need to add the following to your `start` function, before to prepare your supervisor:
+
+```elixir
+Weave.Loader.File.load_configuration()
+```
+
+### Logging
+
+Weave **may** log sensitive information at the `debug` level, stick to `info` in production.
+
 ### Contributing
 
 #### Running Tests with Docker
@@ -54,3 +66,7 @@ $ docker-compose run --rm elixir
 - Documentation
 - Load configuration from environment variables
 - Auto-wiring so a handler isn't needed. Contents of file would be `{:app, :key, :value}`
+
+#### Thanks
+
+Thanks for @sasa1977, @bitwalker and @OvermindDL1 for their advice on putting this together
