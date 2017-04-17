@@ -9,7 +9,7 @@ Feature: It can load configuration from a configured directory
     And the directory exists
     And the following files exist there
     | file_name         | contents                  |
-    | database_host     | my-database-host.com      |
+    | cookie_secret     | I am super Secur3         |
     | database_password | my-super-secret-password  |
     When I run the Weave file loader
     Then my application should be configured
