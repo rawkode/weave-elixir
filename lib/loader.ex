@@ -13,12 +13,8 @@ defmodule Weave.Loader do
           Application.put_env(app, key, merge(Application.get_env(app, key), value))
           Logger.debug("Configuration for #{app}:#{key} loaded: #{inspect Application.get_env(app, key)}")
         rescue
-            # TODO Can we catch both in one clause?
-          error in UndefinedFunctionError ->
-            Logger.info("#{inspect error}")
-            handle_configuration(name, contents)
-          error in FunctionClauseError ->
-            Logger.info("#{inspect error}")
+          error in [UndefinedFunctionError, FunctionClauseError] ->
+            Logger.info(inspect error)
             handle_configuration(name, contents)
         end
       end
