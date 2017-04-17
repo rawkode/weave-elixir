@@ -25,9 +25,9 @@ end
 
 ```elixir
 config :weave,
-  file_directory: "path/to/secrets"
-  environment_prefix: "MYAPP_"
-  handler: Your.Handler
+  file_directory: "path/to/secrets" # Only needed when using the File loader
+  environment_prefix: "MYAPP_"      # Only needed when using the Environment loader
+  handler: Your.Handler             # Always needed :smile:
 ```
 
 ### Handler
@@ -69,11 +69,11 @@ $ docker-compose run --rm elixir
 
 #### Next Steps
 
-[x] Add tests for `merge/2`
-[x] Load configuration from environment variables
-[ ] Documentation
-[ ] Add `:loaders` to specify, through config, which loaders to run and provide a single entrypoint `Weave.load_configuration/0`
-[ ] Auto-wiring so a handler isn't needed. Contents of file would be `{:app, :key, :value}`
+- [x] Add tests for `merge/2`
+- [x] Load configuration from environment variables
+- [ ] Documentation
+- [ ] Add `:loaders` to specify, through config, which loaders to run and provide a single entrypoint `Weave.load_configuration/0`
+- [ ] Auto-wiring so a handler isn't needed. Contents of file would be `{:app, :key, :value}`
 
 #### Thanks
 
