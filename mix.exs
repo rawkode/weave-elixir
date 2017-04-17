@@ -3,7 +3,7 @@ defmodule Weave.Mixfile do
 
   def project do
     [ app: :weave,
-      version: "0.0.2",
+      version: "1.0.0",
       elixir: "~> 1.3",
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
@@ -19,8 +19,7 @@ defmodule Weave.Mixfile do
   def application do
     [ applications: [
       :logger
-    ]
-    ]
+    ] ]
   end
 
   def deps do

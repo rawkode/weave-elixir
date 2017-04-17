@@ -1,6 +1,11 @@
 # Weave
 
+[![Hex.pm](https://img.shields.io/hexpm/v/weave.svg)](https://hex.pm/packages/weave)
+[![Hex.pm](https://img.shields.io/hexpm/l/weave.svg)](https://hex.pm/packages/weave)
+[![Hex.pm](https://img.shields.io/hexpm/dw/weave.svg)](https://hex.pm/packages/weave)
 [![Build Status](https://travis-ci.org/GT8Online/weave.svg?branch=master)](https://travis-ci.org/GT8Online/weave)
+[![Coverage Status](https://coveralls.io/repos/github/GT8Online/weave/badge.svg?branch=master)](https://coveralls.io/github/GT8Online/weave?branch=master)
+
 
 ## A JIT configuration loader for Elixir
 
@@ -12,7 +17,7 @@ This library makes it possible to load configuration, especially secrets, from d
 
 ```elixir
 def deps do
-  [{:weave, "~> 0.0.1"}]
+  [{:weave, "~> 1.0.0"}]
 end
 ```
 
