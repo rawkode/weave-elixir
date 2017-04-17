@@ -21,6 +21,7 @@ end
 ```elixir
 config :weave,
   file_directory: "path/to/secrets"
+  environment_prefix: "MYAPP_"
   handler: Your.Handler
 ```
 
@@ -45,7 +46,8 @@ end
 You'll need to add the following to your `start` function, before to prepare your supervisor:
 
 ```elixir
-Weave.Loader.File.load_configuration()
+Weave.Loaders.File.load_configuration()
+Weave.Loaders.Environment.load_configuration()
 ```
 
 ### Logging
@@ -62,10 +64,11 @@ $ docker-compose run --rm elixir
 
 #### Next Steps
 
-- Add tests for `merge/2`
-- Documentation
-- Load configuration from environment variables
-- Auto-wiring so a handler isn't needed. Contents of file would be `{:app, :key, :value}`
+[x] Add tests for `merge/2`
+[x] Load configuration from environment variables
+[ ] Documentation
+[ ] Add `:loaders` to specify, through config, which loaders to run and provide a single entrypoint `Weave.load_configuration/0`
+[ ] Auto-wiring so a handler isn't needed. Contents of file would be `{:app, :key, :value}`
 
 #### Thanks
 

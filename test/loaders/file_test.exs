@@ -1,4 +1,4 @@
-defmodule Test.Feature.Loader.File do
+defmodule Test.Feature.Loaders.File do
   use Cabbage.Feature, file: "loaders/file.feature"
 
   defgiven ~r/^I have configured weave to load configuration from "(?<file_directory>[^"]+)"$/, %{file_directory: file_directory}, _state do
@@ -24,7 +24,7 @@ defmodule Test.Feature.Loader.File do
   end
 
   defwhen ~r/^I run the Weave file loader$/, _vars, state do
-    Weave.Loader.File.load_configuration()
+    Weave.Loaders.File.load_configuration()
 
     {:ok, state}
   end
