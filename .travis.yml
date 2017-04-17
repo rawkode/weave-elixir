@@ -19,3 +19,4 @@ script:
   - docker-compose run --rm --entrypoint=mix elixir local.rebar --force
   - docker-compose run --rm --entrypoint=mix elixir deps.get
   - docker-compose run --rm elixir coveralls
+  - mix coveralls.travis
