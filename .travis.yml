@@ -11,4 +11,7 @@ env:
 
 script:
   - mix deps.get
-  - mix coveralls.travis
+  - mix coveralls.json
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
