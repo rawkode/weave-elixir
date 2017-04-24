@@ -24,6 +24,6 @@ defmodule Weave.Loaders.File do
              |> File.read!()
              |> String.trim()
 
-    apply_configuration(file_name, configuration, handler)
+    apply_configuration(String.downcase(file_name), configuration, handler)
   end
 end
