@@ -24,4 +24,9 @@ defmodule Test.Weave.Loader do
 
     assert "new.database.com" = Test.Weave.Loaders.Test.test_merge(current_config, "new.database.com")
   end
+
+  test "It can sanitize key names to lower-case" do
+    assert "lower_cased" = Test.Weave.Loaders.Test.test_sanitize("LOWER_CASED")
+    assert "lower_cased" = Test.Weave.Loaders.Test.test_sanitize("lOWEr_CAsED")
+  end
 end
