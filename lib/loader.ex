@@ -9,7 +9,9 @@ defmodule Weave.Loader do
 
       defp apply_configuration(name, contents, handler) do
         try do
-          {app, key, value} = handler.handle_configuration(name, contents)
+          {app, key, value} = name
+          |> sanitize
+          |> handler.handle_configuration(contents)
           Application.put_env(app, key, merge(Application.get_env(app, key), value))
           Logger.debug("Configuration for #{app}:#{key} loaded: #{inspect Application.get_env(app, key)}")
         rescue
@@ -48,6 +50,11 @@ defmodule Weave.Loader do
       defp handle_configuration(file_name, configuration) do
         Logger.warn("External configuration (#{file_name}) provided, but not loaded")
         Logger.debug("configuration value for ignored '#{file_name}' is '#{configuration}'")
+      end
+
+
+      defp sanitize(name) do
+        String.downcase(name)
       end
     end
   end
