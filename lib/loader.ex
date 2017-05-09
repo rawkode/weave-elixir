@@ -7,20 +7,26 @@ defmodule Weave.Loader do
 
       @behaviour Weave.Loader
 
+      @spec apply_configuration(String.t(), String.t(), atom()) :: :ok
       defp apply_configuration(name, contents, handler) do
         try do
           {app, key, value} = name
           |> sanitize
           |> handler.handle_configuration(contents)
+
           Application.put_env(app, key, merge(Application.get_env(app, key), value))
+
           Logger.debug("Configuration for #{app}:#{key} loaded: #{inspect Application.get_env(app, key)}")
         rescue
           error in [UndefinedFunctionError, FunctionClauseError] ->
             Logger.info(inspect error)
             handle_configuration(name, contents)
         end
+
+        :ok
       end
 
+      @spec merge(any(), any()) :: List.t() | Map.t() | String.t()
       defp merge(nil, new) when is_list(new) do
         merge([], new)
       end
@@ -47,12 +53,16 @@ defmodule Weave.Loader do
         new
       end
 
+      @spec handle_configuration(String.t(), Map.t()) :: :ok
       defp handle_configuration(file_name, configuration) do
         Logger.warn("External configuration (#{file_name}) provided, but not loaded")
         Logger.debug("configuration value for ignored '#{file_name}' is '#{configuration}'")
+
+        :ok
       end
 
 
+      @spec sanitize(Sting.t()) :: String.t()
       defp sanitize(name) do
         String.downcase(name)
       end

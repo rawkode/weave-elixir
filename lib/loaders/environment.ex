@@ -1,6 +1,7 @@
 defmodule Weave.Loaders.Environment do
   use Weave.Loader
 
+  @spec load_configuration() :: :ok
   def load_configuration() do
     with {:ok, environment_prefix}  <- Application.fetch_env(:weave, :environment_prefix),
       {:ok, handler}                <- Application.fetch_env(:weave, :handler),
@@ -15,5 +16,7 @@ defmodule Weave.Loaders.Environment do
     else
       :error -> Logger.warn("Tried to load configuration, but :weave hasn't been configured properly. Check :environment_prefix and :handler")
     end
+
+    :ok
   end
 end
