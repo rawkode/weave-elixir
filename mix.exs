@@ -24,6 +24,7 @@ defmodule Weave.Mixfile do
 
   def deps do
     [ {:ex_doc, ">= 0.0.0", only: :dev},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:excoveralls, "~> 0.4", only: :test},
       {:cabbage, "~> 0.3.0", only: :test}
     ]
