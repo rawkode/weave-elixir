@@ -24,8 +24,7 @@ defmodule Test.Feature.Loaders.Environment do
   end
 
   defthen ~r/^my application should be configured$/, _vars, %{environment_prefix: environment_prefix, expected_configuration: expected_configuration} do
-    expected_configuration
-    |> Enum.each(fn(%{key: key, value: value}) ->
+    Enum.each(expected_configuration, fn(%{key: key, value: value}) ->
        assert Application.get_env(:weave, String.to_atom(key)) == value
     end)
     {:ok, %{}}

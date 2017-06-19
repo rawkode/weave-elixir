@@ -6,7 +6,6 @@
 [![Build Status](https://travis-ci.org/GT8Online/weave.svg?branch=master)](https://travis-ci.org/GT8Online/weave)
 [![codecov](https://codecov.io/gh/GT8Online/weave/branch/master/graph/badge.svg)](https://codecov.io/gh/GT8Online/weave)
 
-
 ## A JIT configuration loader for Elixir
 
 ### About
@@ -32,23 +31,41 @@ config :weave,
 
 ### Handler
 
-Your handler should be prepared to handle the files, based on their name, within your `file_directory`.
+Your handler is responsible for taking these environment variables, and/or files, and injecting their values into configuration.
 
 `handle_configuration/2` should return a tuple with the `:app` to set the key value pair on.
 
 Weave will handle merging, so try not to worry about that :smile:
 
+#### Example
+
+Lets assume:
+
+* We are using the environment and file loaders
+* We have the `environment_prefix` configured as `MY_APP_`
+* We have an environment variable called `MY_APP_NAME`
+* We have a file in configured secrets directory called `db_password`
+
+Before being passed to your handler:
+
+* All file-names and environment variables are lower-cased
+* Environment variables have the prefix stripped
+
 ```elixir
 defmodule Your.Handler do
-  def handle_configuration("some_file_name", value) do
-    {:app, :key, value}
+  def handle_configuration("name", value) do
+    {:app, :name, value}
+  end
+
+  def handle_configuration("db_password", value) do
+    {:app, :password, value}
   end
 end
 ```
 
 ### Loading Configuration
 
-You'll need to add the following to your `start` function, before to prepare your supervisor:
+You'll need to add the following to your `start` function, before you prepare your supervisor:
 
 ```elixir
 Weave.Loaders.File.load_configuration()
@@ -71,10 +88,4 @@ $ docker-compose run --rm elixir
 
 - [x] Add tests for `merge/2`
 - [x] Load configuration from environment variables
-- [ ] Documentation
-- [ ] Add `:loaders` to specify, through config, which loaders to run and provide a single entrypoint `Weave.load_configuration/0`
-- [ ] Auto-wiring so a handler isn't needed. Contents of file would be `{:app, :key, :value}`
-
-#### Thanks
-
-Thanks for @sasa1977, @bitwalker and @OvermindDL1 for their advice on putting this together
+- [x] Documentation

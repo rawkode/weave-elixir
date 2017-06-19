@@ -13,7 +13,6 @@ env:
 script:
   - mix deps.get
   - mix coveralls.json
-  - MIX_ENV=dev mix dialyzer
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

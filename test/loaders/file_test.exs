@@ -32,8 +32,7 @@ defmodule Test.Feature.Loaders.File do
   defthen ~r/^my application should be configured$/, _vars, %{file_directory: file_directory, expected_configuration: expected_configuration} do
     File.rm_rf(file_directory)
 
-    expected_configuration
-    |> Enum.each(fn(%{file_name: key, contents: value}) ->
+    Enum.each(expected_configuration, fn(%{file_name: key, contents: value}) ->
       assert Application.get_env(:weave, String.to_atom(key)) == value
     end)
     {:ok, %{}}

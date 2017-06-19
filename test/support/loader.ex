@@ -1,6 +1,8 @@
 defmodule Test.Weave.Loaders.Test do
   use Weave.Loader
 
+  @moduledoc false
+
   def load_configuration() do
     :ok
   end

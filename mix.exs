@@ -12,7 +12,8 @@ defmodule Weave.Mixfile do
       aliases: aliases(),
       description: description(),
       package: package(),
-      test_coverage: [tool: ExCoveralls]
+      test_coverage: [tool: ExCoveralls],
+      docs: [main: "readme", extras: ["README.md"]]
     ]
   end
 

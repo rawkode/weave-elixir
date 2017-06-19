@@ -1,4 +1,12 @@
 defmodule Weave.Loader do
+  @moduledoc """
+  This behaviour should be implemented by all loaders. This will be handled for you with:
+
+  ```elixir
+  use Weave.Loader
+  ```
+  """
+
   @callback load_configuration() :: any
 
   defmacro __using__(_) do
@@ -16,10 +24,10 @@ defmodule Weave.Loader do
 
           Application.put_env(app, key, merge(Application.get_env(app, key), value))
 
-          Logger.debug("Configuration for #{app}:#{key} loaded: #{inspect Application.get_env(app, key)}")
+          Logger.debug fn -> "Configuration for #{app}:#{key} loaded: #{inspect Application.get_env(app, key)}" end
         rescue
           error in [UndefinedFunctionError, FunctionClauseError] ->
-            Logger.info(inspect error)
+            Logger.info fn -> inspect(error) end
             handle_configuration(name, contents)
         end
 
@@ -33,10 +41,10 @@ defmodule Weave.Loader do
 
       defp merge(old, new) when is_list(new) do
         if Keyword.keyword?(new) do
-          Logger.debug("Merging keywords: #{inspect old} and #{inspect new}")
+          Logger.debug fn -> "Merging keywords: #{inspect old} and #{inspect new}" end
           Keyword.merge(old, new)
         else
-          Logger.debug("Merging lists #{inspect old} and #{inspect new}")
+          Logger.debug fn -> "Merging lists #{inspect old} and #{inspect new}" end
           new ++ old
         end
       end
@@ -55,12 +63,11 @@ defmodule Weave.Loader do
 
       @spec handle_configuration(String.t(), Map.t()) :: :ok
       defp handle_configuration(file_name, configuration) do
-        Logger.warn("External configuration (#{file_name}) provided, but not loaded")
-        Logger.debug("configuration value for ignored '#{file_name}' is '#{configuration}'")
+        Logger.warn fn -> "External configuration (#{file_name}) provided, but not loaded" end
+        Logger.debug fn -> "configuration value for ignored '#{file_name}' is '#{configuration}'" end
 
         :ok
       end
-
 
       @spec sanitize(Sting.t()) :: String.t()
       defp sanitize(name) do
