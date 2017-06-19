@@ -16,7 +16,7 @@ This library makes it possible to load configuration, especially secrets, from d
 
 ```elixir
 def deps do
-  [{:weave, "~> 1.0.0"}]
+  [{:weave, "~> 2.0.0"}]
 end
 ```
 
@@ -29,7 +29,7 @@ config :weave,
   handler: Your.Handler             # Always needed :smile:
 ```
 
-### Handler
+### Manual Handler
 
 Your handler is responsible for taking these environment variables, and/or files, and injecting their values into configuration.
 
@@ -63,6 +63,16 @@ defmodule Your.Handler do
 end
 ```
 
+#### Auto Handler Example
+
+In-order to cut down on the boilerplate, you can use the "handler-free" approach and ensure that the values of your environment variables, or contents of files, contain:
+
+```elixir
+{:auto, :app, :name, value}
+```
+
+NB: For now, `config :weave, handler: BLAH` is still required, even if no `handle_configuration/2` functions.
+
 ### Loading Configuration
 
 You'll need to add the following to your `start` function, before you prepare your supervisor:
@@ -83,9 +93,3 @@ Weave **may** log sensitive information at the `debug` level, stick to `info` in
 ```shell
 $ docker-compose run --rm elixir
 ```
-
-#### Next Steps
-
-- [x] Add tests for `merge/2`
-- [x] Load configuration from environment variables
-- [x] Documentation
