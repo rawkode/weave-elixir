@@ -19,7 +19,7 @@ defmodule Weave.Loader do
       defp apply_configuration(name, contents, handler) do
         try do
           {app, key, value} = name
-          |> sanitize
+          |> sanitize()
           |> handler.handle_configuration(contents)
 
           Application.put_env(app, key, merge(Application.get_env(app, key), value))
@@ -61,7 +61,14 @@ defmodule Weave.Loader do
         new
       end
 
-      @spec handle_configuration(String.t(), Map.t()) :: :ok
+      @spec handle_configuration(String.t(), String.t()) :: :ok
+
+      defp handle_configuration(parameter_name, "{:auto," <> configuration) do
+        {config, []} = Code.eval_string(~s/{#{configuration}/)
+
+        config
+      end
+
       defp handle_configuration(file_name, configuration) do
         Logger.warn fn -> "External configuration (#{file_name}) provided, but not loaded" end
         Logger.debug fn -> "configuration value for ignored '#{file_name}' is '#{configuration}'" end

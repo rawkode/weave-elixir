@@ -7,6 +7,10 @@ defmodule Test.Weave.Loaders.Test do
     :ok
   end
 
+  def test_handle_configuration(parameter_name, configuration) do
+    handle_configuration(parameter_name, configuration)
+  end
+
   def test_merge(current_config, new_config) do
     merge(current_config, new_config)
   end

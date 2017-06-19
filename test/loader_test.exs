@@ -29,4 +29,8 @@ defmodule Test.Weave.Loader do
     assert "lower_cased" = Test.Weave.Loaders.Test.test_sanitize("LOWER_CASED")
     assert "lower_cased" = Test.Weave.Loaders.Test.test_sanitize("lOWEr_CAsED")
   end
+
+  test "It can detect :auto wiring configuration types" do
+    assert {:my_app, "password"} = Test.Weave.Loaders.Test.test_handle_configuration("my_app_password", ~s/{:auto, :my_app, "password"}/)
+  end
 end
