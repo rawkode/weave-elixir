@@ -4,11 +4,10 @@ clean:
 deps:
 	@docker-compose run --rm elixir deps.get
 
-tests:
+test:
 	@docker-compose run --rm elixir test
 
 analyse:
 	@docker-compose run --rm -e MIX_ENV=dev elixir dialyzer
 
-.PHONY: tests deps
-
+.PHONY: test deps
