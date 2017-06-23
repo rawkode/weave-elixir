@@ -64,9 +64,11 @@ defmodule Weave.Loader do
       @spec handle_configuration(String.t(), String.t()) :: :ok
 
       defp handle_configuration(parameter_name, "{:auto," <> configuration) do
-        {config, []} = Code.eval_string(~s/{#{configuration}/)
+        {{app, key, value}, []} = Code.eval_string(~s/{#{configuration}/)
 
-        config
+        Application.put_env(app, key, merge(Application.get_env(app, key), value))
+
+        :ok
       end
 
       defp handle_configuration(file_name, configuration) do

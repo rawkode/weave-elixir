@@ -1,5 +1,5 @@
 use Mix.Config
 
-config :logger, level: :info
+config :logger, level: :debug
 
 config :cabbage, features: "feature/"

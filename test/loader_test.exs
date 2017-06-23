@@ -31,6 +31,8 @@ defmodule Test.Weave.Loader do
   end
 
   test "It can detect :auto wiring configuration types" do
-    assert {:my_app, "password"} = Test.Weave.Loaders.Test.test_handle_configuration("my_app_password", ~s/{:auto, :my_app, "password"}/)
+    assert :ok = Test.Weave.Loaders.Test.test_handle_configuration("my_app_password", ~s/{:auto, :my_app, :password, "password"}/)
+
+    assert Application.get_env(:my_app, :password) == "password"
   end
 end
