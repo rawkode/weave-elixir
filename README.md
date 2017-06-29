@@ -60,10 +60,21 @@ defmodule Your.Handler do
   def handle_configuration("db_password", value) do
     {:app, :password, value}
   end
+
+  # Sometimes you need to use the same value twice, so return a list.
+  # NB: We *may* make returning lists the default in the future.
+  def handle_configuration("kafka_host", host) do
+    [
+      {:kaffe, :consumer, [host: {String.to_atom(host): 9092}]},
+      {:kaffe, :producer, [host: {String.to_atom(host): 9092}]}
+    ]
+  end
 end
 ```
 
 #### Auto Handler Example
+
+##### Warning: We intially thought this would help you reduce all the boilerplate associated with writing handlers. We're now not sure this is really worth it. Use with caution.
 
 In-order to cut down on the boilerplate, you can use the "handler-free" approach and ensure that the values of your environment variables, or contents of files, contain:
 
