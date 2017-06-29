@@ -34,7 +34,7 @@ defmodule Weave.Loaders.File do
     :ok
   end
 
-  @spec load_configuration(String.t(), String.t(), atom()) :: :ok
+  @spec load_configuration(binary(), binary(), atom()) :: :ok
   defp load_configuration(file_directory, file_name, handler) do
     configuration = "#{file_directory}/#{file_name}"
                     |> File.read!()

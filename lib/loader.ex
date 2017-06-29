@@ -15,7 +15,7 @@ defmodule Weave.Loader do
 
       @behaviour Weave.Loader
 
-      @spec apply_configuration(String.t(), String.t(), atom()) :: :ok
+      @spec apply_configuration(binary(), binary(), atom()) :: :ok
       defp apply_configuration(name, contents, handler) do
         try do
           name
@@ -50,7 +50,7 @@ defmodule Weave.Loader do
         :ok
       end
 
-      @spec merge(any(), any()) :: List.t() | Map.t() | String.t()
+      @spec merge(any(), any()) :: list() | map() | binary()
       defp merge(nil, new) when is_list(new) do
         merge([], new)
       end
@@ -77,8 +77,7 @@ defmodule Weave.Loader do
         new
       end
 
-      @spec handle_configuration(String.t(), String.t()) :: :ok
-
+      @spec handle_configuration(binary(), binary()) :: :ok
       defp handle_configuration(parameter_name, "{:auto," <> configuration) do
         {{app, key, value}, []} = Code.eval_string(~s/{#{configuration}/)
 
@@ -94,7 +93,7 @@ defmodule Weave.Loader do
         :ok
       end
 
-      @spec sanitize(Sting.t()) :: String.t()
+      @spec sanitize(binary()) :: binary()
       defp sanitize(name) do
         String.downcase(name)
       end
