@@ -7,6 +7,10 @@ defmodule Test.Weave.Loaders.Test do
     :ok
   end
 
+  def test_apply_configuration(name, contents, handler) do
+    apply_configuration(name, contents, handler)
+  end
+
   def test_handle_configuration(parameter_name, configuration) do
     handle_configuration(parameter_name, configuration)
   end

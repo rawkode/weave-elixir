@@ -18,19 +18,35 @@ defmodule Weave.Loader do
       @spec apply_configuration(String.t(), String.t(), atom()) :: :ok
       defp apply_configuration(name, contents, handler) do
         try do
-          {app, key, value} = name
+          name
           |> sanitize()
           |> handler.handle_configuration(contents)
-
-          Application.put_env(app, key, merge(Application.get_env(app, key), value))
-
-          Logger.debug fn -> "Configuration for #{app}:#{key} loaded: #{inspect Application.get_env(app, key)}" end
+          |> configure()
         rescue
           error in [UndefinedFunctionError, FunctionClauseError] ->
             Logger.info fn -> inspect(error) end
             handle_configuration(name, contents)
         end
 
+        :ok
+      end
+
+      # We're transforming this to a List, as I believe we'll
+      # eventually enforce all handle_configuration/1's return List
+      @spec configure({atom(), atom(), any()}) :: :ok
+      defp configure({app, key, value}) do
+        configure([{app, key, value}])
+      end
+
+      @spec configure([{atom(), atom(), any()}]) :: :ok | []
+      defp configure([{app, key, value} | tail]) do
+        Application.put_env(app, key, merge(Application.get_env(app, key), value))
+        Logger.debug fn -> "Configuration for #{app}:#{key} loaded: #{inspect Application.get_env(app, key)}" end
+
+        configure(tail)
+      end
+
+      defp configure([]) do
         :ok
       end
 
