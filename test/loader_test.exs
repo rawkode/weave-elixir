@@ -30,6 +30,13 @@ defmodule Test.Weave.Loader do
     assert "lower_cased" = Test.Weave.Loaders.Test.test_sanitize("lOWEr_CAsED")
   end
 
+  test "It can set multiple configuration keys by returning a list of tuples" do
+    assert :ok = Test.Weave.Loaders.Test.test_apply_configuration("multi", :success, Test.Weave.Handler)
+
+    assert Application.get_env(:weave, :one, :success)
+    assert Application.get_env(:weave, :two, :success)
+  end
+
   test "It can detect :auto wiring configuration types" do
     assert :ok = Test.Weave.Loaders.Test.test_handle_configuration("my_app_password", ~s/{:auto, :my_app, :password, "password"}/)
 
