@@ -4,11 +4,11 @@ Feature: It can load configuration from environment variables
   I need to be able to configure my application from environment variables
 
   Scenario: Load configuration
-    Given I have configured weave to load environment variables with prefix "WEAVE_"
-    And I have provided the configuration handler
+    Given I have configured Weave with a handler
+    And I have configured Weave's Environment loader to load environment variables with prefix "WEAVE_"
     And the following environment variables exist
     | key               | value                     |
     | database_host     | my-database-host.com      |
     | database_port     | 6666                      |
-    When I run the Weave file loader
+    When I run Weave's Environment loader
     Then my application should be configured

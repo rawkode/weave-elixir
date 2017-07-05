@@ -27,13 +27,13 @@ defmodule Weave.Mixfile do
     [ {:ex_doc, ">= 0.0.0", only: :dev},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
       {:excoveralls, "~> 0.4", only: :test},
-      {:cabbage, "~> 0.3.0", only: :test}
+      {:cabbage, "~> 0.3.1", only: :test}
     ]
   end
 
   def aliases do
     [ "init": ["local.hex --force", "deps.get"],
-      "test": ["init", "test"]
+      "test": ["test"]
     ]
   end
 
