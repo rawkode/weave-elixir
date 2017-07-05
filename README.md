@@ -24,9 +24,13 @@ end
 
 ```elixir
 config :weave,
-  file_directory: "path/to/secrets" # Only needed when using the File loader
-  environment_prefix: "MYAPP_"      # Only needed when using the Environment loader
-  handler: Your.Handler             # Always needed :smile:
+  file_directory: "path/to/secrets", # Only needed when using the File loader
+  environment_prefix: "MYAPP_",      # Only needed when using the Environment loader
+  handler: Your.Handler,             # Always needed :smile:
+  loaders: [
+    Weave.Loaders.File,
+    Weave.Loaders.Environment
+  ]
 ```
 
 ### Manual Handler
@@ -89,8 +93,14 @@ NB: For now, `config :weave, handler: BLAH` is still required, even if no `handl
 You'll need to add the following to your `start` function, before you prepare your supervisor:
 
 ```elixir
-Weave.Loaders.File.load_configuration()
+Weave.configure()
+```
+
+If you really wish, you can omit `:loaders` during configuration and load from it manually:
+
+```elixir
 Weave.Loaders.Environment.load_configuration()
+Weave.Loaders.File.load_configuration()
 ```
 
 ### Logging
